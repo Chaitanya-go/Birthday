@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="A luxurious handcrafted birthday greeting card made with love for Tanvi." />
+  <title>Happy Birthday, Tanvi ✦</title>
+
+  <!-- Preload critical fonts for premium typography (Priority 3) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Poppins:wght@300;400;500;600&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- SVG Heart Clipping Mask for Polaroid Collage (Priority 1) -->
+  <svg width="0" height="0" style="position: absolute; pointer-events: none;">
+    <defs>
+      <clipPath id="heart-clip" clipPathUnits="objectBoundingBox">
+        <path d="M 0.5, 0.88 C 0.25, 0.65, 0, 0.48, 0, 0.3 C 0, 0.13, 0.13, 0, 0.3, 0 C 0.42, 0, 0.48, 0.08, 0.5, 0.13 C 0.52, 0.08, 0.58, 0, 0.7, 0 C 0.87, 0, 1, 0.13, 1, 0.3 C 1, 0.48, 0.75, 0.65, 0.5, 0.88 Z" />
+      </clipPath>
+    </defs>
+  </svg>
+
+  <!-- ══════════════════════════════════════════════════════════
+       LAYER 0 — Night Sky Background (stars + particles + petals)
+  ══════════════════════════════════════════════════════════ -->
+  <div id="sky-bg" aria-hidden="true">
+    <canvas id="stars-canvas"></canvas>
+    <canvas id="particles-canvas"></canvas>
+    <div id="petals-container"></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       LAYER 1 — Scene Wrapper
+       Four States: cover → inside → back → final
+  ══════════════════════════════════════════════════════════ -->
+  <div id="scene-wrapper">
+
+    <!-- ────────────────────────────────────────────
+         PAGE 1 — Luxury Front Cover
+    ──────────────────────────────────────────── -->
+    <section id="scene-cover" class="scene active" aria-label="Birthday Card Front Cover">
+      <div id="cover-spotlight" aria-hidden="true"></div>
+      <div id="cover-vignette" aria-hidden="true"></div>
+
+      <div id="card-wrapper">
+        <!-- Satin ribbon (Do not modify ribbon system) -->
+        <div id="ribbon" aria-hidden="true">
+          <div id="ribbon-vertical"></div>
+          <div id="ribbon-horizontal"></div>
+          <div id="ribbon-bow">
+            <div class="bow-loop bow-left"></div>
+            <div class="bow-loop bow-right"></div>
+            <div class="bow-knot"></div>
+            <div class="bow-tail bow-tail-left"></div>
+            <div class="bow-tail bow-tail-right"></div>
+          </div>
+        </div>
+
+        <!-- Greeting Card -->
+        <article
+          id="greeting-card"
+          tabindex="0"
+          role="button"
+          aria-label="Tap to open the birthday card"
+        >
+          <!-- Front Face -->
+          <div id="card-front" class="card-face">
+            <div class="gold-border" aria-hidden="true">
+              <div class="border-corner corner-tl"></div>
+              <div class="border-corner corner-tr"></div>
+              <div class="border-corner corner-bl"></div>
+              <div class="border-corner corner-br"></div>
+              <div class="border-line line-top"></div>
+              <div class="border-line line-bottom"></div>
+              <div class="border-line line-left"></div>
+              <div class="border-line line-right"></div>
+            </div>
+            <div class="paper-texture" aria-hidden="true"></div>
+            <div id="cover-content">
+              <div class="cover-ornament top-ornament" aria-hidden="true">✦ ── ✦</div>
+              <p class="cover-eyebrow">A birthday greeting for</p>
+              <h1 class="cover-title">For The Birthday<br /><em>Girl</em></h1>
+              <div class="cover-rule" aria-hidden="true"></div>
+              <p class="cover-subtitle">Open with a smile.</p>
+              <div class="cover-ornament bottom-ornament" aria-hidden="true">✦ ── ✦</div>
+              <p class="cover-tap-hint" aria-hidden="true">Tap anywhere to open</p>
+            </div>
+          </div>
+
+          <!-- Back Face (shown during flip) -->
+          <div id="card-back-face" class="card-face">
+            <div class="paper-texture" aria-hidden="true"></div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Open Card button at bottom center -->
+      <div class="scene-nav" id="cover-nav">
+        <button id="open-card-btn" class="nav-btn" aria-label="Open the greeting card">
+          Open Card
+          <span class="nav-arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────
+         PAGE 2 — Inside Greeting (Left=Collage, Right=Message)
+    ──────────────────────────────────────────── -->
+    <section id="scene-inside" class="scene" aria-label="Inside Birthday Card" hidden>
+      <div id="inside-card">
+
+        <!-- LEFT PAGE — Heart-shaped Photo Collage -->
+        <div id="page-left" class="card-page" role="region" aria-label="Photo memories collage">
+          <div class="page-texture" aria-hidden="true"></div>
+          <div class="page-inner collage-page-inner">
+            <p class="collage-heading">Our Moments</p>
+            
+            <div class="heart-container">
+              <!-- Glowing heart outline SVG (Priority 1) -->
+              <svg class="heart-outline-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                <path id="heart-outline-path" d="M 50, 88 C 25, 65, 0, 48, 0, 30 C 0, 13, 13, 0, 30, 0 C 42, 0, 48, 8, 50, 13 C 52, 8, 58, 0, 70, 0 C 87, 0, 100, 13, 100, 30 C 100, 48, 75, 65, 50, 88 Z" />
+              </svg>
+              <!-- Heart Collage (Clipped) -->
+              <div id="heart-collage" aria-label="Heart-shaped photo collage">
+                <!-- Polaroids injected by JS -->
+              </div>
+            </div>
+
+            <!-- Heart mosaic caption -->
+            <p id="collage-caption" class="collage-caption" aria-live="polite">
+              Every memory found its place...<br />
+              Just like you found yours in my heart. ❤️
+            </p>
+          </div>
+          <!-- Spine shadow (right edge) -->
+          <div class="page-spine-right" aria-hidden="true"></div>
+        </div>
+
+        <!-- RIGHT PAGE — Birthday Message -->
+        <div id="page-right" class="card-page" role="article" aria-label="Birthday message">
+          <div class="page-texture" aria-hidden="true"></div>
+          <!-- Spine shadow (left edge) -->
+          <div class="page-spine-left" aria-hidden="true"></div>
+          <div class="page-inner message-page-inner">
+            <div class="page-ornament" aria-hidden="true">✦</div>
+            <div id="message-container" aria-live="polite">
+              <!-- Paragraphs injected by JS with fade-in animation -->
+            </div>
+            <div id="signature" aria-label="Signed by Chaitanya">
+              <span class="signature-text">— Chaitanya</span>
+              <span class="signature-heart" aria-hidden="true">❤️</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation: Back & Continue (Priority 5) -->
+      <div class="scene-nav nav-hidden" id="inside-nav">
+        <button id="nav-back-to-cover-btn" class="nav-btn nav-btn-secondary" aria-label="Go back to cover">
+          <span class="nav-arrow" aria-hidden="true">←</span>
+          Back
+        </button>
+        <button id="nav-to-back-btn" class="nav-btn" aria-label="Continue to back cover">
+          Continue
+          <span class="nav-arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────
+         PAGE 3 — Back Cover
+    ──────────────────────────────────────────── -->
+    <section id="scene-back" class="scene" aria-label="Birthday Card Back Cover" hidden>
+      <div id="back-card">
+        <div class="paper-texture" aria-hidden="true"></div>
+        <div class="gold-border" aria-hidden="true">
+          <div class="border-corner corner-tl"></div>
+          <div class="border-corner corner-tr"></div>
+          <div class="border-corner corner-bl"></div>
+          <div class="border-corner corner-br"></div>
+          <div class="border-line line-top"></div>
+          <div class="border-line line-bottom"></div>
+          <div class="border-line line-left"></div>
+          <div class="border-line line-right"></div>
+        </div>
+        <div id="back-content">
+          <div class="back-ornament" aria-hidden="true">✦ ── ✦</div>
+          <p class="back-closing-msg">
+            May this year bring you everything<br />
+            your heart has ever wished for.
+          </p>
+          <div class="back-rule" aria-hidden="true"></div>
+          <p class="back-love">With Love,</p>
+          <p class="back-signature">Chaitanya <span aria-hidden="true">❤️</span></p>
+          <p class="back-dedication">Made especially for <em>Tanvi</em> ❤️</p>
+        </div>
+      </div>
+
+      <!-- Navigation: Back & Next -->
+      <div class="scene-nav nav-hidden" id="back-nav">
+        <button id="nav-back-to-inside-btn" class="nav-btn nav-btn-secondary" aria-label="Go back to the card">
+          <span class="nav-arrow" aria-hidden="true">←</span>
+          Back
+        </button>
+        <button id="nav-to-final-btn" class="nav-btn" aria-label="Continue to final message">
+          Continue
+          <span class="nav-arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────
+         PAGE 4 — Final Goodbye Screen
+    ──────────────────────────────────────────── -->
+    <section id="scene-final" class="scene" aria-label="Final birthday message" hidden>
+      <canvas id="golden-sparkles-canvas" aria-hidden="true"></canvas>
+      <div id="final-content">
+        <p class="final-greeting">Happy Birthday</p>
+        <h2 class="final-name">Tanvi <span aria-hidden="true">❤️</span></h2>
+        <div class="final-rule" aria-hidden="true"></div>
+        <p class="final-message">Now put your phone down…</p>
+        <p class="final-submessage">Someone is waiting to wish you in person.</p>
+        
+        <!-- Glowing heart (Priority 7) -->
+        <div id="final-heart" aria-hidden="true">
+          <div class="heart-glow">
+            <svg class="final-heart-svg" viewBox="0 0 32 32">
+              <path d="M16 28.2 C14.5 26.8 2 15.8 2 10 C2 5.5 5.5 2 10 2 C13 2 15 4 16 5 C17 4 19 2 22 2 C26.5 2 30 5.5 30 10 C30 15.8 17.5 26.8 16 28.2 Z" fill="#c0506a" />
+            </svg>
+          </div>
+        </div>
+
+        <button id="replay-btn" class="nav-btn replay-btn" aria-label="Replay the card from the beginning">
+          Replay ↺
+        </button>
+      </div>
+    </section>
+
+  </div><!-- end #scene-wrapper -->
+
+  <!-- ══════════════════════════════════════════════════════════
+       FLOATING UI — Music Player & Lightbox
+  ══════════════════════════════════════════════════════════ -->
+
+  <!-- Floating glassmorphism music player (Moved to Top Right - Priority 5) -->
+  <div id="music-player" aria-label="Music controls">
+    <button id="music-btn" aria-label="Play birthday music">
+      <span id="music-icon" aria-hidden="true">𝄞</span>
+      <span id="music-label">Play Our Song</span>
+    </button>
+    <audio id="music-audio" preload="none" loop>
+      <source src="assets/music/birthday.mp3" type="audio/mpeg" />
+    </audio>
+  </div>
+
+  <!-- Fullscreen Lightbox -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Media viewer" hidden>
+    <button id="lightbox-close" aria-label="Close viewer">✕</button>
+    <button id="lightbox-prev" aria-label="Previous item">‹</button>
+    <button id="lightbox-next" aria-label="Next item">›</button>
+    <div id="lightbox-media-wrap">
+      <img id="lightbox-img" src="" alt="Birthday memory photo" hidden />
+      <video id="lightbox-video" controls playsinline hidden></video>
+    </div>
+    <p id="lightbox-counter" aria-live="polite"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
